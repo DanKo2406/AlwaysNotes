@@ -1,0 +1,28 @@
+{
+  "name": "alwaysnotes",
+  "version": "1.0.0",
+  "description": "",
+  "main": "",
+  "scripts": {
+    "start": "concurrently \"npm run json-server\" \"npm run dev\"",
+    "dev": "node server",
+    "json-server": "json-server -w database/db.json -p 3000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DanKo2406/AlwaysNotes.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DanKo2406/AlwaysNotes/issues"
+  },
+  "homepage": "https://github.com/DanKo2406/AlwaysNotes#readme",
+  "dependencies": {
+    "concurrently": "^7.4.0",
+    "fs": "^0.0.1-security",
+    "http": "^0.0.1-security",
+    "json-server": "^0.17.0"
+  }
+}
