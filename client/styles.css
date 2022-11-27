@@ -2,13 +2,33 @@ body {
     background-color: #333333;
 }
 
-.block {
+.manageButton {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: solid #fd3;
+    background-color: #fd3;
+    font-size: 25px;
+    color: #937213;
+}
+
+.manageButton:hover {
+    border: 2px solid #ff7701;
+    color: #ff7701;
+}
+
+.manageButton:active {
+    border: #ff7701;
+    background-color: #ff7701;
+    color: #937213;
+}
+
+.noteBlock {
     background-color: #fbdf96;
     max-width: 400px;
     display: flex;
     flex-direction: column;
     margin: 5px 0px 5px 0px;
-    /* border: 2px solid red; */
     padding: 3px;
     border-radius: 10px;
     position: relative;
@@ -30,7 +50,7 @@ textarea {
     border: none;
     outline: none;
     resize: none;
-    overflow: hidden;
+    /* overflow: hidden; */
     color: #937213;
     font-size: large;
 }
@@ -63,22 +83,25 @@ textarea {
     color: #937213;
 }
 
-.create {
-    width: 50px;
-    height: 50px;
-    border-radius: 25px;
-    border: solid #fd3;
-    background-color: #fd3;
-    font-size: 25px;
-    color: #937213;
-}
+@media screen and (orientation: portrait) {
+    body {
+        background-color: #8f0d0d;
+    }
 
-.create:hover {
-    border: 2px solid #ff7701;
-    color: #ff7701;
-}
-.create:active {
-    border: #ff7701;
-    background-color: #ff7701;
-    color: #937213;
+    .buttonBlock {
+        position: fixed;
+        right: 8px;
+        bottom: 8px;
+        z-index: 99999999;
+    }
+
+    .manageButton {
+        width: 180px;
+        height: 180px;
+        margin: 8px;
+    }
+
+    .noteBlock {
+        max-width: 100%;
+    }
 }

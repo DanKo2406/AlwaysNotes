@@ -1,7 +1,10 @@
 let notes = null
+const serverUrl = new URL('http://' + location.host + ':3000')
+const notesUrl = new URL('/notes', serverUrl)
+const deletedNotesUrl = new URL('/deletedNotes', serverUrl)
 
 async function readNotes() {
-    let response = await fetch('http://127.0.0.1:3000/notes')
+    let response = await fetch(notesUrl)
     if (response.ok) { 
         notes = await response.json()       
         renderingNotes()
@@ -10,7 +13,7 @@ async function readNotes() {
     }
 }
 async function recordNotes() {
-    await fetch('http://127.0.0.1:3000/notes', {
+    await fetch(notesUrl, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json;charset=utf-8'
@@ -19,8 +22,18 @@ async function recordNotes() {
     })
 }
 
+async function deleteTrash() {
+    await fetch(deletedNotesUrl, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: '{}'
+    })
+}
+
 function renderingNotes() {
-    let allBlock = document.getElementsByClassName('block')
+    let allBlock = document.getElementsByClassName('noteBlock')
     for (let item = allBlock.length; item > 0; item--) {
         allBlock[item - 1].remove()
     }
@@ -29,7 +42,7 @@ function renderingNotes() {
     arrNotes.sort((a, b) => b.date - a.date)
     for (let item of arrNotes) {
         let noteBlock = document.createElement('div')
-        noteBlock.className = "block"
+        noteBlock.className = "noteBlock"
         document.body.append(noteBlock)
 
         let noteHeader = document.createElement('input')
@@ -46,7 +59,6 @@ function renderingNotes() {
         noteText.style.height = noteText.scrollHeight + 'px'
         noteText.oninput = () => {
             item.text = noteText.value
-
             noteText.style.height = 'auto'
             noteText.style.height = noteText.scrollHeight + 'px'
         }

@@ -4,7 +4,6 @@
   "description": "",
   "main": "",
   "scripts": {
-    "start": "concurrently \"npm run json-server\" \"npm run dev\"",
     "dev": "node server",
     "json-server": "json-server -w database/db.json -p 3000"
   },
@@ -20,7 +19,6 @@
   },
   "homepage": "https://github.com/DanKo2406/AlwaysNotes#readme",
   "dependencies": {
-    "concurrently": "^7.4.0",
     "fs": "^0.0.1-security",
     "http": "^0.0.1-security",
     "json-server": "^0.17.0"
