@@ -5,8 +5,8 @@ const deletedNotesUrl = new URL('/deletedNotes', serverUrl)
 
 async function readNotes() {
     let response = await fetch(notesUrl)
-    if (response.ok) { 
-        notes = await response.json()       
+    if (response.ok) {
+        notes = await response.json()
         renderingNotes()
     } else {
         alert("Ошибка HTTP: " + response.status)
@@ -45,6 +45,22 @@ function renderingNotes() {
         noteBlock.className = "noteBlock"
         document.body.append(noteBlock)
 
+        //event 'click' on noteBlock and document (instead "focusin" and "focusout") required for no changes when changing the window
+        noteBlock.addEventListener("click", (event) => {
+            const oldFocused = document.getElementsByName("focused")[0]
+            if (oldFocused) {
+                oldFocused.style["max-width"] = ""
+                oldFocused.getElementsByTagName('textarea')[0].style.height = 'auto'
+                oldFocused.removeAttribute("name")
+            }
+
+            noteBlock.setAttribute("name", "focused")
+            noteBlock.style["max-width"] = "100%"
+            noteText.style.height = noteText.scrollHeight + 'px'
+
+            event.preventDefault()
+        })
+
         let noteHeader = document.createElement('input')
         noteHeader.type = 'textbox'
         noteHeader.value = item.header
@@ -56,7 +72,6 @@ function renderingNotes() {
         let noteText = document.createElement('textarea')
         noteText.value = item.text
         noteBlock.append(noteText)
-        noteText.style.height = noteText.scrollHeight + 'px'
         noteText.oninput = () => {
             item.text = noteText.value
             noteText.style.height = 'auto'
@@ -80,7 +95,7 @@ create.onclick = () => {
     notes[index].date = index
     notes[index].header = "Введите заголовок"
     notes[index].text = "Введите текст"
-    
+
     renderingNotes()
 }
 save.onclick = () => {
@@ -88,3 +103,14 @@ save.onclick = () => {
 }
 
 readNotes()
+
+
+document.addEventListener("click", (event) => {
+    if (event.defaultPrevented) return
+    const oldFocused = document.getElementsByName("focused")[0]
+    if (oldFocused && ((event.target.className != "noteBlock") || (event.target.parentElement.className != "noteBlock"))) {
+        oldFocused.style["max-width"] = ""
+        oldFocused.getElementsByTagName('textarea')[0].style.height = 'auto'
+        oldFocused.removeAttribute("name")
+    }
+})
