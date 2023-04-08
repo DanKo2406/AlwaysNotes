@@ -38,12 +38,14 @@ function renderingNotes() {
         allBlock[item - 1].remove()
     }
 
+    let noteSection = document.getElementsByClassName('noteSection')
+
     let arrNotes = Object.values(notes)
     arrNotes.sort((a, b) => b.date - a.date)
     for (let item of arrNotes) {
         let noteBlock = document.createElement('div')
         noteBlock.className = "noteBlock"
-        document.body.append(noteBlock)
+        noteSection[0].append(noteBlock)
 
         //event 'click' on noteBlock and document (instead "focusin" and "focusout") required for no changes when changing the window
         noteBlock.addEventListener("click", (event) => {
